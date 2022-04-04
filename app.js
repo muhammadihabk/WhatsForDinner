@@ -27,6 +27,6 @@ pool.getConnection((err, connection) => {
     if(err) { throw err }
     console.log("connected as ID: " + connection.threadId);
 });
-app.get('/', (req, res) => {
-    res.render('index');
-});
+
+const num1 = require('./server/routes/num1');
+app.get('/', num1);

@@ -26,6 +26,17 @@
             </div>
             <hr class="solid">
         </div>
+        <div class="data-point">
+            <% data.forEach(tuple => { %>
+                <p><%=tuple.ID%></p>
+                <p><%=tuple.DishName%></p>
+                <div class="actions">
+                    <a class="btn" href="#"><img src="./images/mode_edit_white_24dp.svg" alt=""></a>
+                    <a class="btn" href="#"><img src="./images/delete_white_24dp.svg" alt=""></a>
+                </div>
+                <hr class="solid">
+            <% }); %>
+        </div>
     </div>
 </body>
 </html>
