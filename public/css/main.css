@@ -48,7 +48,7 @@ nav a {
 .container {
     width: 800px;
     max-width: 1100px;
-    margin: 1em auto 0;
+    margin: 2em auto;
     padding-top: 1em;
     padding-bottom: 1em;
     background-color: var(--background-color-2);
@@ -57,19 +57,20 @@ nav a {
 
 /* data-point card */
 .data-point {
-    width: 400px;
-    max-width: 600px;
+    width: 700px;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 1em;
 }
 
-.data-point p {
-    margin-top: 0;
-    background-color: var(--background-color-2);
+.data-point__container {
+    padding-bottom: 1em;
+}
+
+div[class="data-point"]:not(:last-of-type) {
+    border-bottom: 2px solid var(--background-color-1);
 }
 
 .actions {
-    margin-top: 1em;
     width: 100%;
     padding: 0.25em 0 0;
     display: flex;

@@ -16,27 +16,18 @@
         </div>
     </nav>
     <div class="container">
-        <div class="data-point">
-            <p>First_name Last_name</p>
-            <p>Email: ****@email.com</p>
-            <p>Phone: 01********</p>
-            <div class="actions">
-                <a class="btn" href="#"><img src="./images/mode_edit_white_24dp.svg" alt=""></a>
-                <a class="btn" href="#"><img src="./images/delete_white_24dp.svg" alt=""></a>
-            </div>
-            <hr class="solid">
-        </div>
-        <div class="data-point">
-            <% data.forEach(tuple => { %>
-                <p><%=tuple.ID%></p>
-                <p><%=tuple.DishName%></p>
-                <div class="actions">
-                    <a class="btn" href="#"><img src="./images/mode_edit_white_24dp.svg" alt=""></a>
-                    <a class="btn" href="#"><img src="./images/delete_white_24dp.svg" alt=""></a>
+        <% data.forEach(tuple => { %>
+            <div class="data-point">
+                <div class="data-point__container">
+                    <p><%=tuple.ID%></p>
+                    <p><%=tuple.DishName%></p>
+                    <div class="actions">
+                        <a class="btn" href="#"><img src="./images/mode_edit_white_24dp.svg" alt=""></a>
+                        <a class="btn" href="#"><img src="./images/delete_white_24dp.svg" alt=""></a>
+                    </div>
                 </div>
-                <hr class="solid">
+            </div>
             <% }); %>
-        </div>
     </div>
 </body>
 </html>
