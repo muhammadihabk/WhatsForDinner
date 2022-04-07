@@ -29,5 +29,4 @@ pool.getConnection((err, connection) => {
 });
 
 const num1 = require('./server/routes/num1');
-app.get('/', num1);
-app.post('/fiind', num1);
+app.use('/', num1);
