@@ -11,9 +11,6 @@ app.use(express.json());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-app.listen(3001, () => {
-    console.log('Listening on port 3001');
-});
 
 const pool = mysql.createPool({
     connectionLimit: 5,
@@ -30,3 +27,7 @@ pool.getConnection((err, connection) => {
 
 const num1 = require('./server/routes/num1');
 app.use('/', num1);
+
+app.listen(3001, () => {
+    console.log('Listening on port 3001');
+});
