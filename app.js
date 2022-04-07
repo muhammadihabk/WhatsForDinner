@@ -20,11 +20,6 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
-pool.getConnection((err, connection) => {
-    if(err) { throw err }
-    console.log("connected as ID: " + connection.threadId);
-});
-
 const num1 = require('./server/routes/num1');
 app.use('/', num1);
 
