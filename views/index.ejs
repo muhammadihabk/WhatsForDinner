@@ -10,10 +10,10 @@
 <body>
     <nav>
         <a href="/">Home</a>
-        <div class="nav__search">
-            <input type="text" name="" id="search">
-            <button class="btn"><img src="./images/search_white_24dp.svg"></button>
-        </div>
+        <form method="POST" action="/fiind" class="nav__search">
+            <input type="search" name="search" id="search">
+            <button class="btn" type="submit"><img src="./images/search_white_24dp.svg"></button>
+        </form>
     </nav>
     <div class="container">
         <% data.forEach(tuple => { %>

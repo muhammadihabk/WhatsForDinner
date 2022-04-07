@@ -5,7 +5,7 @@ require('dotenv').config();
 
 let app = express();
 /* UNDERSTAND */
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 /* ^^^^^^^^^^ */
 app.use(express.static('public'));
@@ -30,3 +30,4 @@ pool.getConnection((err, connection) => {
 
 const num1 = require('./server/routes/num1');
 app.get('/', num1);
+app.post('/fiind', num1);
