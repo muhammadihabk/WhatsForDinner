@@ -1,16 +1,12 @@
 let express = require('express');
 let mysql = require('mysql2');
-
 require('dotenv').config();
 
 let app = express();
-/* UNDERSTAND */
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
-/* ^^^^^^^^^^ */
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
-
 
 const pool = mysql.createPool({
     connectionLimit: 5,
