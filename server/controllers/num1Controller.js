@@ -31,7 +31,7 @@ exports.find = (req, res) => {
         console.log("connected as ID: " + connection.threadId);
         let searchValue = req.body.search;
         let tempQuery = `SELECT * FROM Dish WHERE DishName LIKE ?`;
-        connection.query(tempQuery, searchValue, (err, data) => {
+        connection.query(tempQuery, `%${searchValue}%`, (err, data) => {
             connection.release();
             if(!err) {
                 res.render('index', { data });
