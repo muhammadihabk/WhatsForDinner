@@ -9,7 +9,7 @@ const pool = mysql.createPool({
 });
 
 // READ
-exports.READ = (req, res) => {
+exports.read = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
