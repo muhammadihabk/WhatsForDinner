@@ -41,3 +41,7 @@ exports.find = (req, res) => {
         });
     });
 };
+
+exports.add = (req, res) => {
+    res.render('add-dish');
+};
