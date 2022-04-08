@@ -19,6 +19,6 @@ const pool = mysql.createPool({
 const num1 = require('./server/routes/num1');
 app.use('/', num1);
 
-app.listen(3001, () => {
-    console.log('Listening on port 3001');
+app.listen(3000, () => {
+    console.log('Listening on port 3000');
 });
