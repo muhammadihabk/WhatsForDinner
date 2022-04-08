@@ -8,13 +8,7 @@
     <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a>
-        <form method="POST" action="/fiind" class="nav__search">
-            <input type="search" name="search" id="search">
-            <button class="btn" type="submit"><img src="./images/search_white_24dp.svg"></button>
-        </form>
-    </nav>
+    <%- include('./partials/nav') %>
     <div class="container">
         <div class="add-dish">
             <a href="/add-dish" type="button" class="btn add-dish__btn">Add Dish</a>
