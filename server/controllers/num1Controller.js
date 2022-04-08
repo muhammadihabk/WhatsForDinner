@@ -16,10 +16,10 @@ exports.read = (req, res) => {
         let tempQuery = `SELECT * FROM Dish`;
         connection.query(tempQuery, (err, data) => {
             connection.release();
-            if(!err) {
-                res.render('index', { data });
+            if(err) {
+                console.log('error in query');
             } else {
-                console.log('err');
+                res.render('index', { data });
             }
         });
     });
@@ -33,10 +33,10 @@ exports.find = (req, res) => {
         let tempQuery = `SELECT * FROM Dish WHERE DishName LIKE ?`;
         connection.query(tempQuery, `%${searchValue}%`, (err, data) => {
             connection.release();
-            if(!err) {
-                res.render('index', { data });
-            } else {
+            if(err) {
                 console.log('Unsuccessful query');
+            } else {
+                res.render('index', { data });
             }
         });
     });
