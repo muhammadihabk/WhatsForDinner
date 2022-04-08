@@ -71,12 +71,19 @@ a {
     margin: 0 auto;
 }
 
-.data-point__container {
-    padding-bottom: 1em;
-}
-
 div[class="data-point"]:not(:last-of-type) {
     border-bottom: 2px solid var(--background-color-1);
+}
+
+.data-point__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.total-price p {
+    font-size: 3rem;
+    margin-right: 2em;
 }
 
 .actions {
