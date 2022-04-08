@@ -13,39 +13,35 @@ exports.read = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
-        /**
-         * Generate rand num from [0,1] for class
-         * if 0
-         *      do light query
-         * else
-         *      generate rand num from [0,1]
-         *      Do heavy query
-         * 
-         */
-         let randClass = Math.floor(Math.random() * 1);
-         let tempQuery = ``;
+        let tempQuery = ``;
+        let randClass = Math.floor(Math.random() * 2);
+        let Animal_Seafood = Math.floor(Math.random() * 2);
+        if(randClass == 0) {
+            Animal_Seafood = 0
+        }
          tempQuery = `SELECT d.DishName,
-         SUM(Ingredient.Price * DishIngredient.Quantity) AS Price_ingredient
-         FROM Dish AS d
-         INNER JOIN DishIngredient
-             ON d.ID = DishIngredient.DishID
-         INNER JOIN Ingredient
-             ON Ingredient.ID = DishIngredient.IngredientID
-         WHERE Class = 0
-         GROUP BY d.DishName
-         ORDER BY RAND()
-         LIMIT 3;`;
-        connection.query(tempQuery, (err, data) => {
+                    CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
+                    FROM Dish AS d
+                    INNER JOIN DishIngredient
+                        ON d.ID = DishIngredient.DishID
+                    INNER JOIN Ingredient
+                        ON Ingredient.ID = DishIngredient.IngredientID
+                    WHERE Class = ?
+                        AND (Animal_Seafood = ? OR Animal_Seafood = 2)
+                    GROUP BY d.DishName
+                    ORDER BY RAND()
+                    LIMIT 3;`;
+        connection.query(tempQuery, [randClass, Animal_Seafood], (err, data) => {
             connection.release();
             if(err) {
                 console.log('error in query');
             } else {
                 let totalPrice = 0;
                 data.forEach(tuple => {
-                    totalPrice += tuple.Price_ingredient;
+                    totalPrice += parseFloat(tuple.Price_ingredient);
                 });
+                totalPrice = totalPrice.toFixed(2);
                 res.render('index', { data: data, totalPrice: totalPrice });
-                console.log(data);
             }
         });
     });

@@ -13,17 +13,18 @@
         <div class="add-dish">
             <a href="/add-dish" type="button" class="btn add-dish__btn">Add Dish</a>
         </div>
-        <% data.forEach(tuple => { %>
-            <div class="data-point">
-                <div class="data-point__container">
+        <div class="data-point">
+            <div class="data-point__container">
+                <% data.forEach(tuple => { %>
                     <p><%= tuple.DishName %></p>                    
+                    <% }); %>
+                    <p><%= totalPrice %></p>
                     <div class="actions">
                         <a class="btn" href="#"><img src="./images/mode_edit_white_24dp.svg" alt=""></a>
                         <a class="btn" href="#"><img src="./images/delete_white_24dp.svg" alt=""></a>
                     </div>
                 </div>
             </div>
-            <% }); %>
     </div>
 </body>
 </html>
