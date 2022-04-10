@@ -42,8 +42,9 @@ exports.meal = (req, res) => {
         let randClass = Math.floor(Math.random() * 2);
         let Animal_Seafood = Math.floor(Math.random() * 2);
         if(randClass == 0) {
-            Animal_Seafood = 0
+            Animal_Seafood = 0;
         }
+        console.log(req.body);
          tempQuery = `SELECT d.DishName,
                     CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
                     FROM Dish AS d
@@ -66,7 +67,41 @@ exports.meal = (req, res) => {
                     totalPrice += parseFloat(tuple.Price_ingredient);
                 });
                 totalPrice = totalPrice.toFixed(2);
-                res.send({ data: data, totalPrice: totalPrice });
+                res.send('bla');
+            }
+        });
+    });
+};
+
+exports.meal_ingredient = (req, res) => {
+    pool.getConnection((err, connection) => {
+        if(err) { throw err }
+        console.log("connected as ID: " + connection.threadId);
+        let tempQuery = ``;
+        let randClass = Math.floor(Math.random() * 2);
+        let Animal_Seafood = Math.floor(Math.random() * 2);
+        if(randClass == 0) {
+            Animal_Seafood = 0;
+        }
+        console.log(req.body);
+         tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) AS Price
+                        FROM (SELECT d.ID, d.DishName
+                                FROM Dish AS d
+                                WHERE Class = ?
+                                    AND (Animal_Seafood = ? OR Animal_Seafood = 2)
+                                ORDER BY RAND()
+                                LIMIT 3) AS d
+                        INNER JOIN DishIngredient AS di
+                            ON d.ID = di.DishID
+                        INNER JOIN Ingredient AS i
+                            ON i.ID = di.IngredientID;`;
+        connection.query(tempQuery, [randClass, Animal_Seafood], (err, data) => {
+            connection.release();
+            if(err) {
+                console.log('error in query');
+            } else {
+                console.log(data);
+                res.send({ data: data});
             }
         });
     });

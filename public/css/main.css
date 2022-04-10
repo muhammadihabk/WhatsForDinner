@@ -57,6 +57,19 @@ a {
     border-radius: 0.25rem;
 }
 
+.generate-form {
+    padding: 2em;
+}
+
+.generate-form__options {
+    display: flex;
+    gap: 1em;
+}
+
+.generate-form button {
+    margin-top: 1em;
+}
+
 .add-dish {
     width: fit-content;
     margin-left: auto;
@@ -81,8 +94,13 @@ div[class="data-point"]:not(:last-of-type) {
     justify-content: space-between;
 }
 
+.dishes {
+    width: 300px;
+}
+
 .total-price {
     width: 400px;
+    margin-left: 2em;
 }
 
 .total-price p {
@@ -109,6 +127,9 @@ div[class="data-point"]:not(:last-of-type) {
     border: none;
     cursor: pointer;
     border-radius: 0.25rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.15rem;
 }
 
 .btn:hover {
