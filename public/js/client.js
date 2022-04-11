@@ -72,7 +72,6 @@ let onFormSubmition = (e) => {
                 dishesDiv.innerHTML = '';
                 let totalPrice = 0;
                 let dishes = data.data;
-    
                 // Get 3 unique dishes
                 let currDish = '';
                 let choosenDishes = [
@@ -84,24 +83,29 @@ let onFormSubmition = (e) => {
                 for(let dish of dishes) {
                     if(dish.DishName === currDish) {
                         choosenDishes[i].push(dish.IngredientName);
+                        choosenDishes[i][1] += parseFloat(dish.Price);
                     } else {
                         currDish = dish.DishName;
                         i++;
                         choosenDishes[i].push(currDish);
+                        choosenDishes[i].push(parseFloat(dish.Price));
                         choosenDishes[i].push(dish.IngredientName);
                     }
                     totalPrice += parseFloat(dish.Price);
                 }
                 choosenDishes.forEach(dish => {
-                    let para = document.createElement('p');
-                    para.innerHTML = `<b>${dish[0]}</b>: `;
-                    dishesDiv.append(para);
+                    let dishPrice = dish[1];
+                    dish.splice(1, 1);
+                    let dishPara = document.createElement('p');
+                    dishPara.innerHTML = `<b>${dish[0]}</b>: `;
                     for(let i = 1; i < dish.length; i++) {
-                        para.innerHTML += `${dish[i]}`;
+                        dishPara.innerHTML += `${dish[i]}`;
                         if(i < dish.length - 1) {
-                            para.innerHTML += ', ';
+                            dishPara.innerHTML += ', ';
                         }
                     }
+                    dishPara.innerHTML += `<br><b>Price</b>: ${dishPrice.toFixed(2)}`;
+                    dishesDiv.append(dishPara);
                 });
                 let actionsDiv = document.querySelector('.actions');
                 actionsDiv.classList.remove('hide');
