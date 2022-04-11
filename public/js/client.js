@@ -1,4 +1,3 @@
-let dataPointDiv = document.querySelector('.data-point');
 document.addEventListener('keydown', (e) => {
     if(e.code === 'KeyE') {
         // No ingredients
@@ -12,7 +11,6 @@ document.addEventListener('keydown', (e) => {
             dishesDiv.innerHTML = '';
             let totalPrice = 0;
             let dishes = data.data;
-
             // Get 3 unique dishes
             let currDish = '';
             let choosenDishes = [
@@ -153,7 +151,6 @@ form.addEventListener('submit', onFormSubmition);
 
 document.addEventListener('keydown', (e) => {
     if(e.code === 'Space') {
-        console.log(e.code);
         onFormSubmition(e);
     }
 });

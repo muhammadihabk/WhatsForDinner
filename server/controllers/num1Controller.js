@@ -96,7 +96,6 @@ exports.meal_no_ingredients = (req, res) => {
                     totalPrice += parseFloat(tuple.Price_ingredient);
                 });
                 totalPrice = totalPrice.toFixed(2);
-                console.log('No ingredients query');
                 res.send({ data: data});
             }
         });
