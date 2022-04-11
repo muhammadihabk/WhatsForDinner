@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const url = require('url');
 
 const pool = mysql.createPool({
     connectionLimit: 5,
@@ -34,7 +35,19 @@ exports.add = (req, res) => {
     res.render('add-dish');
 };
 
-exports.meal = (req, res) => {
+// exports.meal_param = (req, res) => {
+//     let reqBody = url.parse(req.url, true).query;
+//     console.log(reqBody);
+//     if(!('ingredients' in reqBody)) {
+//         console.log('meal');
+
+//     } else {
+//         console.log('meal_ingredient');
+//     }
+//     res.send('response')
+// };
+
+exports.meal_no_ingredients = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
@@ -67,13 +80,13 @@ exports.meal = (req, res) => {
                     totalPrice += parseFloat(tuple.Price_ingredient);
                 });
                 totalPrice = totalPrice.toFixed(2);
-                res.send('bla');
+                res.send({ data: data});
             }
         });
     });
 };
 
-exports.meal_ingredient = (req, res) => {
+exports.meal_ingredients = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
@@ -84,7 +97,7 @@ exports.meal_ingredient = (req, res) => {
             Animal_Seafood = 0;
         }
         console.log(req.body);
-         tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) AS Price
+        tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) AS Price
                         FROM (SELECT d.ID, d.DishName
                                 FROM Dish AS d
                                 WHERE Class = ?
@@ -100,7 +113,6 @@ exports.meal_ingredient = (req, res) => {
             if(err) {
                 console.log('error in query');
             } else {
-                console.log(data);
                 res.send({ data: data});
             }
         });
