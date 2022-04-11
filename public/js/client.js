@@ -1,33 +1,4 @@
 let dataPointDiv = document.querySelector('.data-point');
-/*
-document.addEventListener('keydown', (e) => {
-    if(e.code === 'Space') {
-        fetch('/meal_ingredient')
-        .then((res) => {
-            if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
-            return res.json();
-        })
-        .then(data => {
-            let dishesDiv = document.querySelector('.dishes');
-            dishesDiv.innerHTML = '';
-            let totalPrice = data.totalPrice;
-            let dishes = data.data;
-            dishes.forEach(tuple => {
-                let para = document.createElement('p');
-                para.textContent = tuple.DishName;
-                dishesDiv.append(para);
-            });
-            let totalPriceDiv = document.querySelector('.total-price');
-            totalPriceDiv.innerHTML = '';
-            let pricePara = document.createElement('p');
-            pricePara.innerHTML = `Total<br>${totalPrice} EGP`;
-            totalPriceDiv.append(pricePara);
-            let actionsDiv = document.querySelector('.actions');
-            actionsDiv.classList.remove('hide');
-        });
-    }
-});*/
-
 document.addEventListener('keydown', (e) => {
     if(e.code === 'KeyE') {
         // No ingredients
@@ -84,8 +55,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-let form = document.querySelector('.generate-form');
-form.addEventListener('submit', (e) => {
+let onFormSubmition = (e) => {
     let data = new FormData(form);
     let [arr] = data;
     let init = {
@@ -176,4 +146,14 @@ form.addEventListener('submit', (e) => {
         });
     }
     e.preventDefault();
-    }, false);
+};
+
+let form = document.querySelector('.generate-form');
+form.addEventListener('submit', onFormSubmition);
+
+document.addEventListener('keydown', (e) => {
+    if(e.code === 'Space') {
+        console.log(e.code);
+        onFormSubmition(e);
+    }
+});
