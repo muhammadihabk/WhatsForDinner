@@ -34,46 +34,6 @@ exports.add = (req, res) => {
     res.render('add-dish');
 };
 
-// exports.meal_no_ingredients = (req, res) => {
-//     pool.getConnection((err, connection) => {
-//         if(err) { throw err }
-//         console.log("connected as ID: " + connection.threadId);
-//         let dishClass = Math.floor(Math.random() * 2);
-//         let animalOrSeafood = Math.floor(Math.random() * 2);
-//         if(dishClass === 0) {
-//             animalOrSeafood = 0 ;
-//         }
-//         [dishClass, animalOrSeafood] = setParameters(req.body, dishClass, animalOrSeafood);
-//         let tempQuery = `SELECT d.DishName,
-//                          CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
-//                          FROM Dish AS d
-//                          INNER JOIN DishIngredient
-//                             ON d.ID = DishIngredient.DishID
-//                          INNER JOIN Ingredient
-//                             ON Ingredient.ID = DishIngredient.IngredientID
-//                          WHERE Class = ?
-//                             AND (Animal_Seafood = ? OR Animal_Seafood = 2)
-//                          GROUP BY d.DishName
-//                          ORDER BY RAND()
-//                          LIMIT 3;`;
-//         connection.query(tempQuery, [dishClass, animalOrSeafood], (err, data) => {
-//             connection.release();
-//             if(err) {
-//                 console.log('error in query');
-//             } else {
-//                 let totalPrice = 0;
-//                 data.forEach(tuple => {
-//                     totalPrice += parseFloat(tuple.Price_ingredient);
-//                 });
-//                 totalPrice = totalPrice.toFixed(2);
-//                 console.log('No ingredients');
-//                 console.log(data);
-//                 res.send({ data: data});
-//             }
-//         });
-//     });
-// };
-
 exports.generateMeal = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }

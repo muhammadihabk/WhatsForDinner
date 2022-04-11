@@ -1,4 +1,4 @@
-let onFormSubmition = (e) => {
+let onGenerationFormSubmission = (e) => {
     let data = new FormData(form);
     let [arr] = data;
     let init = {
@@ -72,11 +72,11 @@ let onFormSubmition = (e) => {
     e.preventDefault();
 };
 
-let form = document.querySelector('.generate-form');
-form.addEventListener('submit', onFormSubmition);
+let form = document.querySelector('.generation-form');
+form.addEventListener('submit', onGenerationFormSubmission);
 
 document.addEventListener('keydown', (e) => {
     if(e.code === 'Space') {
-        onFormSubmition(e);
+        onGenerationFormSubmission(e);
     }
 });

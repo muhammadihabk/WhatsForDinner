@@ -57,16 +57,16 @@ a {
     border-radius: 0.25rem;
 }
 
-.generate-form {
+.generation-form {
     padding: 2em;
 }
 
-.generate-form__options {
+.generation-form__options {
     display: flex;
     gap: 1em;
 }
 
-.generate-form button {
+.generation-form button {
     margin-top: 1em;
 }
 
