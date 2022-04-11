@@ -1,5 +1,4 @@
 const mysql = require('mysql2');
-const url = require('url');
 
 const pool = mysql.createPool({
     connectionLimit: 5,
@@ -35,18 +34,6 @@ exports.add = (req, res) => {
     res.render('add-dish');
 };
 
-// exports.meal_param = (req, res) => {
-//     let reqBody = url.parse(req.url, true).query;
-//     console.log(reqBody);
-//     if(!('ingredients' in reqBody)) {
-//         console.log('meal');
-
-//     } else {
-//         console.log('meal_ingredient');
-//     }
-//     res.send('response')
-// };
-
 exports.meal_no_ingredients = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
@@ -58,17 +45,17 @@ exports.meal_no_ingredients = (req, res) => {
         }
         [dishClass, animalOrSeafood] = setParameters(req.body, dishClass, animalOrSeafood);
         let tempQuery = `SELECT d.DishName,
-                    CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
-                    FROM Dish AS d
-                    INNER JOIN DishIngredient
-                        ON d.ID = DishIngredient.DishID
-                    INNER JOIN Ingredient
-                        ON Ingredient.ID = DishIngredient.IngredientID
-                    WHERE Class = ?
-                        AND (Animal_Seafood = ? OR Animal_Seafood = 2)
-                    GROUP BY d.DishName
-                    ORDER BY RAND()
-                    LIMIT 3;`;
+                         CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
+                         FROM Dish AS d
+                         INNER JOIN DishIngredient
+                            ON d.ID = DishIngredient.DishID
+                         INNER JOIN Ingredient
+                            ON Ingredient.ID = DishIngredient.IngredientID
+                         WHERE Class = ?
+                            AND (Animal_Seafood = ? OR Animal_Seafood = 2)
+                         GROUP BY d.DishName
+                         ORDER BY RAND()
+                         LIMIT 3;`;
         connection.query(tempQuery, [dishClass, animalOrSeafood], (err, data) => {
             connection.release();
             if(err) {
@@ -96,16 +83,16 @@ exports.meal_ingredients = (req, res) => {
         }
         [dishClass, animalOrSeafood] = setParameters(req.body, dishClass, animalOrSeafood);
         let tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) AS Price
-                        FROM (SELECT d.ID, d.DishName
-                                FROM Dish AS d
-                                WHERE Class = ?
-                                AND (Animal_Seafood = ? OR Animal_Seafood = 2)
-                                ORDER BY RAND()
-                                LIMIT 3) AS d
-                                INNER JOIN DishIngredient AS di
-                                ON d.ID = di.DishID
-                                INNER JOIN Ingredient AS i
-                                ON i.ID = di.IngredientID;`;
+                         FROM (SELECT d.ID, d.DishName
+                               FROM Dish AS d
+                               WHERE Class = ?
+                                   AND (Animal_Seafood = ? OR Animal_Seafood = 2)
+                               ORDER BY RAND()
+                               LIMIT 3) AS d
+                         INNER JOIN DishIngredient AS di
+                            ON d.ID = di.DishID
+                         INNER JOIN Ingredient AS i
+                            ON i.ID = di.IngredientID;`;
         connection.query(tempQuery, [dishClass, animalOrSeafood], (err, data) => {
             connection.release();
             if(err) {
