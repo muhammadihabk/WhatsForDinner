@@ -31,7 +31,7 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
     if(e.code === 'KeyE') {
         // No ingredients
-        fetch('/meal_ingredient')
+        fetch('/meal_no_ingredients')
         .then((res) => {
             if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
             return res.json();
@@ -92,9 +92,9 @@ form.addEventListener('submit', (e) => {
         method: 'POST',
         body: data
     };
-    if(arr[0] === 'ingredients') {
+    if(typeof arr !== 'undefined' && arr[0] === 'ingredients') {
         // Ingredients
-        fetch(form.getAttribute('action'), init)
+        fetch('meal_ingredients', init)
         .then((res) => {
             if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
             return res.json();
@@ -149,7 +149,7 @@ form.addEventListener('submit', (e) => {
             });
     } else {
         // No ingredients
-        fetch('/meal_ingredient')
+        fetch('/meal_no_ingredients', init)
         .then((res) => {
             if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
             return res.json();
@@ -159,36 +159,11 @@ form.addEventListener('submit', (e) => {
             dishesDiv.innerHTML = '';
             let totalPrice = 0;
             let dishes = data.data;
-
-            // Get 3 unique dishes
-            let currDish = '';
-            let choosenDishes = [
-                [],
-                [],
-                [],
-            ];
-            let i = -1;
-            for(let dish of dishes) {
-                if(dish.DishName === currDish) {
-                    choosenDishes[i].push(dish.IngredientName);
-                } else {
-                    currDish = dish.DishName;
-                    i++;
-                    choosenDishes[i].push(currDish);
-                    choosenDishes[i].push(dish.IngredientName);
-                }
-                totalPrice += parseFloat(dish.Price);
-            }
-            choosenDishes.forEach(dish => {
+            dishes.forEach(dish => {
                 let para = document.createElement('p');
-                para.innerHTML = `<b>${dish[0]}</b>: `;
+                para.innerHTML = dish.DishName;
                 dishesDiv.append(para);
-                for(let i = 1; i < dish.length; i++) {
-                    para.innerHTML += `${dish[i]}`;
-                    if(i < dish.length - 1) {
-                        para.innerHTML += ', ';
-                    }
-                }
+                totalPrice += parseFloat(dish.Price_ingredient);
             });
             let actionsDiv = document.querySelector('.actions');
             actionsDiv.classList.remove('hide');
