@@ -57,23 +57,22 @@ exports.meal_no_ingredients = (req, res) => {
             animalOrSeafood = 0 ;
         }
         let parameters = req.body;
-        console.log(parameters);
-        if('light_heavy' in parameters) {
-            animalOrSeafood = 0;
-            if(parameters.light_heavy.toLowerCase() === 'light') {
+        Object.entries(parameters).forEach(([key, value]) => {
+            console.log(key, value);
+            if(value.toLowerCase() === 'light') {
                 dishClass = 0;
-            } else {
-                dishClass = 1;
-            }
-        }
-        if('animal_seafood' in parameters) {
-            dishClass = 1;
-            if(parameters.animal_seafood.toLowerCase() === 'animal') {
                 animalOrSeafood = 0;
-            } else {
+            } else if(value.toLowerCase() === 'heavy') {
+                dishClass = 1;
+                animalOrSeafood = Math.floor(Math.random() * 2);
+            } else if(value.toLowerCase() === 'animal') {
+                dishClass = 1;
+                animalOrSeafood = 0;
+            } else if(value.toLowerCase() === 'seafood') {
+                dishClass = 1;
                 animalOrSeafood = 1;
             }
-        }
+        });
         let tempQuery = `SELECT d.DishName,
                     CAST(SUM(Ingredient.Price * DishIngredient.Quantity) AS DECIMAL(6,2)) AS Price_ingredient
                     FROM Dish AS d
@@ -121,23 +120,22 @@ exports.meal_ingredients = (req, res) => {
             animalOrSeafood = 0 ;
         }
         let parameters = req.body;
-        console.log(parameters);
-        if('light_heavy' in parameters) {
-            animalOrSeafood = 0;
-            if(parameters.light_heavy.toLowerCase() === 'light') {
+        Object.entries(parameters).forEach(([key, value]) => {
+            console.log(key, value);
+            if(value.toLowerCase() === 'light') {
                 dishClass = 0;
-            } else {
-                dishClass = 1;
-            }
-        }
-        if('animal_seafood' in parameters) {
-            dishClass = 1;
-            if(parameters.animal_seafood.toLowerCase() === 'animal') {
                 animalOrSeafood = 0;
-            } else {
+            } else if(value.toLowerCase() === 'heavy') {
+                dishClass = 1;
+                animalOrSeafood = Math.floor(Math.random() * 2);
+            } else if(value.toLowerCase() === 'animal') {
+                dishClass = 1;
+                animalOrSeafood = 0;
+            } else if(value.toLowerCase() === 'seafood') {
+                dishClass = 1;
                 animalOrSeafood = 1;
             }
-        }
+        });
         /*let setParameters = (req.body) => {
 
         };*/
