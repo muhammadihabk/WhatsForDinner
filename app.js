@@ -1,12 +1,14 @@
 import express from 'express';
 import 'dotenv/config.js'
 import dishes from './routes/dishes.js';
+import cors from 'cors'; 
 
 let app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.render('index');

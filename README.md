@@ -2,7 +2,7 @@
 In progress NodeJS app. Used MySQL for the DB.
 # Functional requirements
 - [x] Suggest meals from the database
-- [ ] Search for a specific dish
+- [x] Search for a specific dish
 - [ ] Insert a new dish
 - [ ] Delete a dish
 # How to use

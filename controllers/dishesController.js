@@ -8,27 +8,6 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
-export const find = (req, res) => {
-    pool.getConnection((err, connection) => {
-        if(err) { throw err }
-        console.log("connected as ID: " + connection.threadId);
-        let searchValue = req.body.search;
-        let tempQuery = `SELECT * FROM Dish WHERE DishName LIKE ?`;
-        connection.query(tempQuery, `%${searchValue}%`, (err, data) => {
-            connection.release();
-            if(err) {
-                console.log('Unsuccessful query');
-            } else {
-                res.render('index', { data });
-            }
-        });
-    });
-};
-
-export const add = (req, res) => {
-    res.render('add-dish');
-};
-
 export const generateMeal = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
@@ -55,10 +34,37 @@ export const generateMeal = (req, res) => {
             if(err) {
                 console.log('error in query');
             } else {
-                res.send({ data: data});
+                res.json({data});
             }
         });
     });
+};
+
+export const search = (req, res) => {
+    pool.getConnection((err, connection) => {
+        if(err) { throw err }
+        console.log("connected as ID: " + connection.threadId);
+        const searchValue = req.body.search;
+        let tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) Price
+                        FROM Dish d
+                        INNER JOIN DishIngredient AS di
+                            ON d.ID = di.DishID
+                        INNER JOIN Ingredient AS i
+                            ON i.ID = di.IngredientID
+                        WHERE d.DishName LIKE ?;`;
+        connection.query(tempQuery, `%${searchValue}%`, (err, data) => {
+            connection.release();
+            if(err) {
+                console.log('Unsuccessful query');
+            } else {
+                res.json({data});
+            }
+        });
+    });
+};
+
+export const add = (req, res) => {
+    res.render('add-dish');
 };
 
 // Helper function

@@ -1,11 +1,11 @@
 let onGenerationFormSubmission = (e) => {
-    let data = new FormData(form);
-    let [arr] = data;
-    let init = {
+    let formData = new FormData(generationForm);
+    let [formParameters] = formData;
+    const options = {
         method: 'POST',
-        body: data
+        body: formData
     };
-    fetch('/app/generate_meal', init)
+    fetch('/app/generate_meal', options)
     .then((res) => {
         if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
         return res.json();
@@ -28,7 +28,7 @@ let onGenerationFormSubmission = (e) => {
                 }
                 totalPrice += parseFloat(dish.Price);
             }
-            if(typeof arr !== 'undefined' && arr[0] === 'ingredients') {
+            if(typeof formParameters !== 'undefined' && formParameters[0] === 'ingredients') {
                 currDish = '';
                 let i = 0;
                 for(let dish of dishes) {
@@ -43,7 +43,7 @@ let onGenerationFormSubmission = (e) => {
             choosenDishes.forEach(dish => {
                 let dishPara = document.createElement('p');
                 dishPara.innerHTML = `<b>${dish[0]}</b>`;
-                if(typeof arr !== 'undefined' && arr[0] === 'ingredients') {
+                if(typeof formParameters !== 'undefined' && formParameters[0] === 'ingredients') {
                     dishPara.innerHTML += ': ';
                     let dishPrice = dish[1];
                     dish.splice(1, 1);
@@ -72,11 +72,43 @@ let onGenerationFormSubmission = (e) => {
     e.preventDefault();
 };
 
-let form = document.querySelector('.generation-form');
-form.addEventListener('submit', onGenerationFormSubmission);
+const generationForm = document.querySelector('.generation-form');
+generationForm.addEventListener('submit', onGenerationFormSubmission);
 
 document.addEventListener('keydown', (e) => {
     if(e.code === 'Space') {
         onGenerationFormSubmission(e);
     }
+});
+
+// Search for a dish
+const searchForm = document.querySelector('#search-form');
+searchForm.addEventListener('submit', (e) => {
+    const formData = new FormData(searchForm);
+    const options = {
+        method: 'POST',
+        body: formData
+    }
+    fetch('/app/search', options)
+    .then((res) => {
+        if(!res.ok) { throw new Error(`HTTP error. States: ${res.status}`) }
+        return res.json();
+    })
+    .then((data) => {
+        let dishesDiv = document.querySelector('.dishes');
+        let tuples = data.data;
+        let totalPrice = 0;
+        let ingredients = [];
+        for(const tuple of tuples) {
+            ingredients.push(tuple.IngredientName);
+            totalPrice += parseFloat(tuple.Price);
+        }
+        dishesDiv.innerHTML = `<b>${tuples[0].DishName}</b>${ingredients.join(', ')}`;
+        let totalPriceDiv = document.querySelector('.total-price');
+        totalPriceDiv.innerHTML = '';
+        let pricePara = document.createElement('p');
+        pricePara.innerHTML = totalPrice.toFixed(2);
+        totalPriceDiv.append(pricePara);
+    });
+    e.preventDefault();
 });

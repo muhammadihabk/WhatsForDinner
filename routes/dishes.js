@@ -9,9 +9,9 @@ const upload = multer();
 // CREATE
 // READ
 dishes.post('/generate_meal', upload.none(), dishesController.generateMeal);
+dishes.post('/search', upload.none(), dishesController.search);
 // UPDATE
 // DELETE
-dishes.post('/find', dishesController.find);
 dishes.get('/add-dish', dishesController.add);
 
 export default dishes;
