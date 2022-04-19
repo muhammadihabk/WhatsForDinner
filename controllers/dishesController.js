@@ -69,8 +69,39 @@ export const search = (req, res) => {
     });
 };
 
-export const addDish = (req, res) => {
+export const addDishPage = (req, res) => {
     res.sendFile('/public/html/addDish.html', { root: __dirname });
+};
+
+export const addDish = (req, res) => {
+    pool.getConnection((error, connection) => {
+        if(error) { throw error }
+        console.log("connected as ID: " + connection.threadId);
+        console.log(req.body);
+        // Dish DB table
+        const dishName = req.body.dishName;
+        let classNum = 0;
+        let Animal_Seafood =  2;
+        if(req.body.light_heavy === 'heavy') {
+            classNum =  1;
+        }
+        if(req.body.animal_seafood === 'animal') {
+            Animal_Seafood =  0;
+        } else if(req.body.animal_seafood === 'seafood') {
+            Animal_Seafood =  1;
+        }
+        // Ingredients DB table
+        const ingredientName = req.body.ingredients;
+        let tempQuery = `INSERT INTO Dish
+                        VALUES (NULL, ?, ?, ?);`;
+        connection.query(tempQuery, [dishName, classNum, Animal_Seafood], (error, data) => {
+            if(error) {
+                console.log(`Database query error. ${error}`);
+            }
+            res.end();
+            connection.release;
+        });
+    });
 };
 
 // Helper function

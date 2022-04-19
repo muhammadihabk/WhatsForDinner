@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhatsForDinner</title>
     <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/addDish.js" defer></script>
 </head>
 <body>
     <nav>
@@ -16,14 +17,15 @@
         </form>
     </nav>
     <div class="container">
-        <form class="form">
+        <form class="form add-dish-form">
             <label for="dishName">Dish Name: </label>
             <input type="text" name="dishName" class="inputText">
             <div class="form__options">
-                <label for="light"><input type="radio" name="parameter" value="light" id="light"> Light</label>
-                <label for="heavy"><input type="radio" name="parameter" value="heavy" id="heavy"> Heavy</label>
-                <label for="animal"><input type="radio" name="parameter" value="animal" id="animal"> Animal</label>
-                <label for="seafood"><input type="radio" name="parameter" value="seafood" id="seafood"> Seafood</label>
+                <label for="light"><input type="radio" name="light_heavy" value="light" id="light"> Light</label>
+                <label for="heavy"><input type="radio" name="light_heavy" value="heavy" id="heavy"> Heavy</label>
+                <label for="animal"><input type="radio" name="animal_seafood" value="animal" id="animal"> Animal</label>
+                <label for="seafood"><input type="radio" name="animal_seafood" value="seafood" id="seafood"> Seafood</label>
+                <label for="animal_and_seafood"><input type="radio" name="animal_seafood" value="animal_and_seafood" id="animal_and_seafood"> Animal and Seafood</label>
                 <label for="ingredients"></label>
             </div>
             <div class="form__ingredients-textarea">
