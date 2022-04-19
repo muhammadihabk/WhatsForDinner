@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management System</title>
+    <title>WhatsForDinner</title>
     <link rel="stylesheet" href="./css/main.css">
     <script src="./js/client.js" defer></script>
 </head>
 <body>
-    <%- include('./partials/nav') %>
+    <nav>
+        <a href="/">Home</a>
+        <form class="nav__search" id="search-form">
+            <input type="search" name="search" id="search">
+            <button class="btn" type="submit"><img src="./images/search_white_24dp.svg"></button>
+        </form>
+    </nav>
     <div class="container">
         <div class="add-dish">
             <a href="/add-dish" type="button" class="btn add-dish__btn">Add Dish</a>
