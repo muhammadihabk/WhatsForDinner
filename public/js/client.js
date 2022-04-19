@@ -5,7 +5,7 @@ let onGenerationFormSubmission = (e) => {
         method: 'POST',
         body: data
     };
-    fetch('/generate_meal', init)
+    fetch('/app/generate_meal', init)
     .then((res) => {
         if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
         return res.json();

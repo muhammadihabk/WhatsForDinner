@@ -16,8 +16,12 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
-const num1 = require('./server/routes/num1');
-app.use('/', num1);
+const dishes = require('./routes/dishes');
+app.get('/', (req, res) => {
+    res.render('index');
+});
+
+app.use('/app', dishes);
 
 app.listen(3000, () => {
     console.log('Listening on port 3000');
