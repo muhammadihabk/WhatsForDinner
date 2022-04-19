@@ -1,17 +1,17 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-const upload = multer();
+import express from 'express';
+import multer from 'multer';
+import * as dishesController from '../controllers/dishesController.js';
 
-const dishesController = require('../controllers/dishesController');
+const dishes = express.Router();
+const upload = multer();
 
 // CRUD
 // CREATE
 // READ
-router.post('/generate_meal', upload.none(), dishesController.generateMeal);
+dishes.post('/generate_meal', upload.none(), dishesController.generateMeal);
 // UPDATE
 // DELETE
-router.post('/find', dishesController.find);
-router.get('/add-dish', dishesController.add);
+dishes.post('/find', dishesController.find);
+dishes.get('/add-dish', dishesController.add);
 
-module.exports = router;
+export default dishes;

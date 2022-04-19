@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+import mysql from 'mysql2';
 
 const pool = mysql.createPool({
     connectionLimit: 5,
@@ -9,11 +9,11 @@ const pool = mysql.createPool({
 });
 
 // Home
-exports.read = (req, res) => {
-    res.render('index');
-};
+// export read = (req, res) => {
+//     res.render('index');
+// };
 
-exports.find = (req, res) => {
+export const find = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
@@ -30,11 +30,11 @@ exports.find = (req, res) => {
     });
 };
 
-exports.add = (req, res) => {
+export const add = (req, res) => {
     res.render('add-dish');
 };
 
-exports.generateMeal = (req, res) => {
+export const generateMeal = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
         console.log("connected as ID: " + connection.threadId);
