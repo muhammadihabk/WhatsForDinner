@@ -12,6 +12,7 @@ body {
     font-family: sans-serif;
     background-color: var(--background-color-1);
     color: #fff;
+    line-height: 1.5rem;
 }
 
 /* nav */
@@ -36,7 +37,7 @@ a {
     font-weight: bold;
 }
 
-#search {
+.inputText {
     padding: 0 0.4rem;
     height: 34px;
     font-size: 1.1rem;
@@ -57,17 +58,18 @@ a {
     border-radius: 0.25rem;
 }
 
-.generation-form {
+.form {
     padding: 2em;
 }
 
-.generation-form__options {
+.form__options {
+    margin-top: 2em;
     display: flex;
     gap: 1em;
 }
 
-.generation-form button {
-    margin-top: 1em;
+.form button {
+    margin-top: 2em;
 }
 
 .add-dish {
@@ -138,4 +140,22 @@ div[class="data-point"]:not(:last-of-type) {
 
 .btn:hover {
     background-color: var(--background-color-4);
+}
+
+/* addDish
+********************************** */
+.form__ingredients-textarea {
+    margin-top: 2em;
+}
+
+.ingredients-textarea {
+    margin-top: 1em;
+    padding-top: 0.5rem;
+    display: block;
+    width: 650px;
+    height: 100px;
+}
+
+.small-font-size {
+    font-size: 0.75rem;
 }

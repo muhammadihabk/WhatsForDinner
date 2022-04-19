@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsForDinner</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <form class="nav__search" id="search-form">
+            <input type="search" name="search" class="inputText">
+            <button class="btn" type="submit"><img src="../images/search_white_24dp.svg"></button>
+        </form>
+    </nav>
+    <div class="container">
+        <form class="form">
+            <label for="dishName">Dish Name: </label>
+            <input type="text" name="dishName" class="inputText">
+            <div class="form__options">
+                <label for="light"><input type="radio" name="parameter" value="light" id="light"> Light</label>
+                <label for="heavy"><input type="radio" name="parameter" value="heavy" id="heavy"> Heavy</label>
+                <label for="animal"><input type="radio" name="parameter" value="animal" id="animal"> Animal</label>
+                <label for="seafood"><input type="radio" name="parameter" value="seafood" id="seafood"> Seafood</label>
+                <label for="ingredients"></label>
+            </div>
+            <div class="form__ingredients-textarea">
+                <label for="ingredients-textarea">ingredient name, price per whole/KG and quantity that serves 2 people
+                    <br>
+                    <em class="small-font-size">Enter values spearated by comma</em></label>
+                <textarea name="ingredients" class="ingredients-textarea inputText" cols="30" rows="10" placeholder="ingredientName,price,quantity"></textarea>
+            </div>
+            <button type="submit" class="btn">Insert</button>
+        </form>
+    </div>
+</body>
+</html>

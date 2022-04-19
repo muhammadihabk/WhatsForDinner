@@ -1,4 +1,10 @@
 import mysql from 'mysql2';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+let __dirname = dirname(__filename);
+__dirname = path.resolve();
 
 const pool = mysql.createPool({
     connectionLimit: 5,
@@ -63,8 +69,8 @@ export const search = (req, res) => {
     });
 };
 
-export const add = (req, res) => {
-    res.render('add-dish');
+export const addDish = (req, res) => {
+    res.sendFile('/public/html/addDish.html', { root: __dirname });
 };
 
 // Helper function
