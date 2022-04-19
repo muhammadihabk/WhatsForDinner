@@ -8,11 +8,6 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
-// Home
-// export read = (req, res) => {
-//     res.render('index');
-// };
-
 export const find = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
