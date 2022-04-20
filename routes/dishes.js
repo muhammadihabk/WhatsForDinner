@@ -15,5 +15,6 @@ dishes.post('/generate_meal', upload.none(), dishesController.generateMeal);
 dishes.post('/search', upload.none(), dishesController.search);
 // UPDATE
 // DELETE
+dishes.get('/delete-dish', dishesController.deleteDishPage);
 
 export default dishes;

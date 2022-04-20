@@ -81,7 +81,7 @@ export const ingredientNames = (req, res) => {
         console.log("connected as ID: " + connection.threadId);
         console.log(req.body);
         let tempQuery = `SELECT IngredientName
-                        FROM Ingredient; `;
+        FROM Ingredient; `;
         connection.query(tempQuery, (error, data) => {
             if(error) {
                 console.log(`Database query error. ${error}`);
@@ -114,6 +114,10 @@ export const addDish = async (req, res) => {
     const ingredientQuantity = parseInt(req.body.ingredientQuantity);
     insertDishIngredient(dishId, ingredientId, ingredientQuantity);
     res.end('OK');
+};
+
+export const deleteDishPage = (req, res) => {
+    res.sendFile('/public/html/deleteDish.html', { root: __dirname });
 };
 
 // Helper function

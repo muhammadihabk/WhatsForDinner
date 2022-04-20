@@ -73,7 +73,7 @@ a {
     margin-top: 2em;
 }
 
-.add-dish {
+.dish-btns {
     width: fit-content;
     margin-left: auto;
     margin-right: 3em;
@@ -150,4 +150,10 @@ div[class="data-point"]:not(:last-of-type) {
 ********************************** */
 .form__ingredients- {
     margin-top: 2em;
+}
+
+/* deleteDish
+********************************** */
+.delete-btn {
+    display: block;
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsForDinner</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="../js/addDish.js" defer></script>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <form class="nav__search" id="search-form">
+            <input type="search" name="search" class="inputText">
+            <button class="btn" type="submit"><img src="../images/search_white_24dp.svg"></button>
+        </form>
+    </nav>
+    <div class="container">
+        <form class="form delete-dish-form">
+            <label for="dishName">Dish Name: </label>
+            <input type="text" name="dishName" class="inputText">
+            <button type="submit" class="btn delete-btn">Delete</button>
+            <p class="deletion-success"></p>
+        </form>
+    </div>
+</body>
+</html>
