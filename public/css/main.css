@@ -147,18 +147,6 @@ div[class="data-point"]:not(:last-of-type) {
 
 /* addDish
 ********************************** */
-.form__ingredients-textarea {
+.form__ingredients- {
     margin-top: 2em;
-}
-
-.ingredients-textarea {
-    margin-top: 1em;
-    padding-top: 0.5rem;
-    display: block;
-    width: 650px;
-    height: 100px;
-}
-
-.small-font-size {
-    font-size: 0.75rem;
 }

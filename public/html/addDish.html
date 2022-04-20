@@ -21,18 +21,17 @@
             <label for="dishName">Dish Name: </label>
             <input type="text" name="dishName" class="inputText">
             <div class="form__options">
-                <label for="light"><input type="radio" name="light_heavy" value="light" id="light"> Light</label>
-                <label for="heavy"><input type="radio" name="light_heavy" value="heavy" id="heavy"> Heavy</label>
-                <label for="animal"><input type="radio" name="animal_seafood" value="animal" id="animal"> Animal</label>
-                <label for="seafood"><input type="radio" name="animal_seafood" value="seafood" id="seafood"> Seafood</label>
+                <label for="light"><input type="radio" name="light_heavy" value="light" id="light" required> Light</label>
+                <label for="heavy"><input type="radio" name="light_heavy" value="heavy" id="heavy" required> Heavy</label>
+                <label for="animal"><input type="radio" name="animal_seafood" value="animal" id="animal" required> Animal</label>
+                <label for="seafood"><input type="radio" name="animal_seafood" value="seafood" id="seafood" required> Seafood</label>
                 <label for="animal_and_seafood"><input type="radio" name="animal_seafood" value="animal_and_seafood" id="animal_and_seafood"> Animal and Seafood</label>
                 <label for="ingredients"></label>
             </div>
-            <div class="form__ingredients-textarea">
-                <label for="ingredients-textarea">ingredient name, price per whole/KG and quantity that serves 2 people
-                    <br>
-                    <em class="small-font-size">Enter values spearated by comma</em></label>
-                <textarea name="ingredients" class="ingredients-textarea inputText" cols="30" rows="10" placeholder="ingredientName,price,quantity"></textarea>
+            <div class="form__ingredients-">
+                <select id="ingredientName" name="ingredientName" required></select>
+                <input type="text" name="ingredientPrice" id="ingredientPrice" placeholder="price per piece/KG" required>
+                <input type="text" name="ingredientQuantity" id="ingredientQuantity" placeholder="quantity for a 2-persons dish" required>
             </div>
             <button type="submit" class="btn">Insert</button>
         </form>
