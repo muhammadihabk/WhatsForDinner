@@ -113,7 +113,7 @@ export const addDish = async (req, res) => {
     // DishIngredients DB table
     const ingredientQuantity = parseInt(req.body.ingredientQuantity);
     insertDishIngredient(dishId, ingredientId, ingredientQuantity);
-    res.end();
+    res.end('OK');
 };
 
 // Helper function

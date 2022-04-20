@@ -24,8 +24,9 @@ addDishForm.addEventListener('submit', (e) => {
     fetch('/app/add-dish', options)
     .then((res) => {
         if(!res.ok) { throw new Error(`Couldn't fetch ${res.status}`) }
-        console.log('done');
-        return res.json();
+        const successMessage = document.querySelector('.insertion-success');
+        successMessage.innerHTML = 'Success';
+        successMessage.style.color = 'yellowgreen';
     });
     e.preventDefault();
 });
