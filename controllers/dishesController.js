@@ -14,6 +14,8 @@ const pool = mysql.createPool({
     password: process.env.DB_PASSWORD
 });
 
+const promisePool = pool.promise();
+
 export const generateMeal = (req, res) => {
     pool.getConnection((err, connection) => {
         if(err) { throw err }
@@ -91,9 +93,7 @@ export const ingredientNames = (req, res) => {
 };
 
 export const addDish = (req, res) => {
-    pool.getConnection((error, connection) => {
-        doQueries(error, connection, req);
-    });
+    doQueries(req);
     res.end();
 };
 
@@ -120,11 +120,10 @@ let setParameters = (parameters, dishClass, animalOrSeafood) => {
 };
 
 // Helper function
-let insertDish = async (connection, dishName, classNum, Animal_Seafood) => {
-    let dishId = 0;
+let insertDish = async (dishName, classNum, Animal_Seafood) => {
     let tempQuery = `INSERT INTO Dish
                     VALUES (NULL, ?, ?, ?);`;
-    await connection.promise().query(tempQuery, [dishName, classNum, Animal_Seafood], (error, data) => {
+    let queryData = await promisePool.query(tempQuery, [dishName, classNum, Animal_Seafood], (error, data) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
@@ -134,37 +133,35 @@ let insertDish = async (connection, dishName, classNum, Animal_Seafood) => {
         console.log(`dishId before exiting query`);
         console.log(dishId);
     });
-    return dishId;
+    return queryData[0].insertId;
 };
 
-
 // Helper function
-const insertIngredient = async (connection, ingredientName, ingredientPrice) => {
-    let ingredientId = 0;
+const insertIngredient = async (ingredientName, ingredientPrice) => {
     let tempQuery = `INSERT INTO Ingredient
-                    VALUES (NULL, ?, ?);`;
-    await connection.promise().query(tempQuery, [ingredientName, ingredientPrice], (error, data) => {
+    VALUES (NULL, ?, ?);`;
+    let queryData = await promisePool.query(tempQuery, [ingredientName, ingredientPrice], (error, data) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
-        console.log(`data.insertId from Ingredient query:\n`);
-        console.log(data.insertId);
-        ingredientId = data.insertId;
-        console.log(`ingredientId before exiting query`);
-        console.log(ingredientId);
+        // console.log(`data.insertId from Ingredient query:\n`);
+        // console.log(data.insertId);
+        // ingredientId = data.insertId;
+        // console.log(`ingredientId before exiting query`);
+        // console.log(ingredientId);
     });
-    return ingredientId;
+    return queryData[0].insertId;
 }
 
 // Helper function
-const insertDishIngredient = async (connection, dishId, ingredientId, ingredientQuantity) => {
+const insertDishIngredient = async (dishId, ingredientId, ingredientQuantity) => {
     let tempQuery = `INSERT INTO DishIngredient
                     VALUES (?, ?, ?);`;
     console.log(`dishId after query`);
     console.log(dishId);
     console.log(`ingredientId after query`);
     console.log(ingredientId);
-    await connection.promise().query(tempQuery, [dishId, ingredientId, ingredientQuantity], (error, data) => {
+    await promisePool.query(tempQuery, [dishId, ingredientId, ingredientQuantity], (error, data) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
@@ -174,34 +171,31 @@ const insertDishIngredient = async (connection, dishId, ingredientId, ingredient
 }
 
 // Helper function
-const doQueries = async (error, connection, req) => {
-    if(error) { throw error }
-        console.log("connected as ID: " + connection.threadId);
-        console.log(`req.body`);
-        console.log(req.body);
-        // Dish DB table
-        const dishName = req.body.dishName;
-        let classNum = 0;
-        let Animal_Seafood =  2;
-        if(req.body.light_heavy === 'heavy') {
-            classNum =  1;
-        }
-        if(req.body.animal_seafood === 'animal') {
-            Animal_Seafood =  0;
-        } else if(req.body.animal_seafood === 'seafood') {
-            Animal_Seafood =  1;
-        }
-        let dishId = await insertDish(connection, dishName, classNum, Animal_Seafood);
-        console.log(`dishId after let in doQueries`);
-        console.log(dishId);
-        // Ingredient DB table
-        const ingredientName = req.body.ingredientName;
-        const ingredientPrice = req.body.ingredientPrice;
-        let ingredientId = await insertIngredient(connection, ingredientName, ingredientPrice);
-        console.log(`ingredientId after let in doQueries`);
-        console.log(ingredientId);
-        // DishIngredients DB table
-        const ingredientQuantity = req.body.ingredientQuantity;
-        await insertDishIngredient(connection, dishId, ingredientId, ingredientQuantity);
-        connection.release;
+const doQueries = async (req) => {
+    console.log(`req.body`);
+    console.log(req.body);
+    // Dish DB table
+    const dishName = req.body.dishName;
+    let classNum = 0;
+    let Animal_Seafood =  2;
+    if(req.body.light_heavy === 'heavy') {
+        classNum =  1;
+    }
+    if(req.body.animal_seafood === 'animal') {
+        Animal_Seafood =  0;
+    } else if(req.body.animal_seafood === 'seafood') {
+        Animal_Seafood =  1;
+    }
+    let dishId = await insertDish(dishName, classNum, Animal_Seafood);
+    console.log(`dishId after let in doQueries`);
+    console.log(dishId);
+    // Ingredient DB table
+    const ingredientName = req.body.ingredientName;
+    const ingredientPrice = req.body.ingredientPrice;
+    let ingredientId = await insertIngredient(ingredientName, ingredientPrice);
+    console.log(`ingredientId after let in doQueries`);
+    console.log(ingredientId);
+    // DishIngredients DB table
+    const ingredientQuantity = parseInt(req.body.ingredientQuantity);
+    insertDishIngredient(dishId, ingredientId, ingredientQuantity);
 }
