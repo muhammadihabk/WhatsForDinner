@@ -92,8 +92,27 @@ export const ingredientNames = (req, res) => {
     });
 };
 
-export const addDish = (req, res) => {
-    doQueries(req);
+export const addDish = async (req, res) => {
+    // Dish DB table
+    const dishName = req.body.dishName;
+    let classNum = 0;
+    let Animal_Seafood =  2;
+    if(req.body.light_heavy === 'heavy') {
+        classNum =  1;
+    }
+    if(req.body.animal_seafood === 'animal') {
+        Animal_Seafood =  0;
+    } else if(req.body.animal_seafood === 'seafood') {
+        Animal_Seafood =  1;
+    }
+    let dishId = await insertDish(dishName, classNum, Animal_Seafood);
+    // Ingredient DB table
+    const ingredientName = req.body.ingredientName;
+    const ingredientPrice = req.body.ingredientPrice;
+    let ingredientId = await insertIngredient(ingredientName, ingredientPrice);
+    // DishIngredients DB table
+    const ingredientQuantity = parseInt(req.body.ingredientQuantity);
+    insertDishIngredient(dishId, ingredientId, ingredientQuantity);
     res.end();
 };
 
@@ -123,15 +142,10 @@ let setParameters = (parameters, dishClass, animalOrSeafood) => {
 let insertDish = async (dishName, classNum, Animal_Seafood) => {
     let tempQuery = `INSERT INTO Dish
                     VALUES (NULL, ?, ?, ?);`;
-    let queryData = await promisePool.query(tempQuery, [dishName, classNum, Animal_Seafood], (error, data) => {
+    let queryData = await promisePool.query(tempQuery, [dishName, classNum, Animal_Seafood], (error) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
-        console.log(`data.insertId from Dish query:\n`);
-        console.log(data.insertId);
-        dishId = data.insertId;
-        console.log(`dishId before exiting query`);
-        console.log(dishId);
     });
     return queryData[0].insertId;
 };
@@ -139,16 +153,11 @@ let insertDish = async (dishName, classNum, Animal_Seafood) => {
 // Helper function
 const insertIngredient = async (ingredientName, ingredientPrice) => {
     let tempQuery = `INSERT INTO Ingredient
-    VALUES (NULL, ?, ?);`;
-    let queryData = await promisePool.query(tempQuery, [ingredientName, ingredientPrice], (error, data) => {
+                     VALUES (NULL, ?, ?);`;
+    let queryData = await promisePool.query(tempQuery, [ingredientName, ingredientPrice], (error) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
-        // console.log(`data.insertId from Ingredient query:\n`);
-        // console.log(data.insertId);
-        // ingredientId = data.insertId;
-        // console.log(`ingredientId before exiting query`);
-        // console.log(ingredientId);
     });
     return queryData[0].insertId;
 }
@@ -157,45 +166,9 @@ const insertIngredient = async (ingredientName, ingredientPrice) => {
 const insertDishIngredient = async (dishId, ingredientId, ingredientQuantity) => {
     let tempQuery = `INSERT INTO DishIngredient
                     VALUES (?, ?, ?);`;
-    console.log(`dishId after query`);
-    console.log(dishId);
-    console.log(`ingredientId after query`);
-    console.log(ingredientId);
-    await promisePool.query(tempQuery, [dishId, ingredientId, ingredientQuantity], (error, data) => {
+    await promisePool.query(tempQuery, [dishId, ingredientId, ingredientQuantity], (error) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
-        console.log(`data from dishIngredient query`);
-        console.log(data);
     });
-}
-
-// Helper function
-const doQueries = async (req) => {
-    console.log(`req.body`);
-    console.log(req.body);
-    // Dish DB table
-    const dishName = req.body.dishName;
-    let classNum = 0;
-    let Animal_Seafood =  2;
-    if(req.body.light_heavy === 'heavy') {
-        classNum =  1;
-    }
-    if(req.body.animal_seafood === 'animal') {
-        Animal_Seafood =  0;
-    } else if(req.body.animal_seafood === 'seafood') {
-        Animal_Seafood =  1;
-    }
-    let dishId = await insertDish(dishName, classNum, Animal_Seafood);
-    console.log(`dishId after let in doQueries`);
-    console.log(dishId);
-    // Ingredient DB table
-    const ingredientName = req.body.ingredientName;
-    const ingredientPrice = req.body.ingredientPrice;
-    let ingredientId = await insertIngredient(ingredientName, ingredientPrice);
-    console.log(`ingredientId after let in doQueries`);
-    console.log(ingredientId);
-    // DishIngredients DB table
-    const ingredientQuantity = parseInt(req.body.ingredientQuantity);
-    insertDishIngredient(dishId, ingredientId, ingredientQuantity);
 }
