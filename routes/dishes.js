@@ -16,5 +16,6 @@ dishes.post('/search', upload.none(), dishesController.search);
 // UPDATE
 // DELETE
 dishes.get('/delete-dish', dishesController.deleteDishPage);
+dishes.delete('/delete-dish', upload.none(), dishesController.deleteDish);
 
 export default dishes;

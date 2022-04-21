@@ -5,7 +5,7 @@ In progress RESTful NodeJS app. Used MySQL for the DB and learning asynchronicit
 - [x] Suggest meals from the database
 - [x] Search for a specific dish
 - [x] Insert a new dish
-- [ ] Delete a dish
+- [x] Delete a dish
 
 **Extras** \
 [Might do later](https://github.com/muhammadihabk/WhatsForDinner/blob/main/Extras.md)

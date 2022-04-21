@@ -120,6 +120,24 @@ export const deleteDishPage = (req, res) => {
     res.sendFile('/public/html/deleteDish.html', { root: __dirname });
 };
 
+export const deleteDish =  async (req, res) => {
+    const dishName = req.body.dishName;
+    let tempQuery = `DELETE
+                    FROM Dish
+                    WHERE DishName = ?;`;
+    const queryResult = await promisePool.query(tempQuery, dishName, (error, results, fields) => {
+        if(error) {
+            console.log(`Database query error. ${error}`);
+        }
+    });
+    if(queryResult[0].affectedRows === 0) {
+        res.status(404).end();
+    } else {
+        res.end();
+    }
+};
+
+
 // Helper function
 // By default parameters are
 // dishClass = 0 and animalOrSeafood = 0
