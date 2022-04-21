@@ -57,8 +57,6 @@ let onGenerationFormSubmission = (e) => {
                 }
                 dishesDiv.append(dishPara);
             });
-            let actionsDiv = document.querySelector('.actions');
-            actionsDiv.classList.remove('hide');
             totalPrice = totalPrice.toFixed(2);
             let totalPriceDiv = document.querySelector('.total-price');
             totalPriceDiv.innerHTML = '';
