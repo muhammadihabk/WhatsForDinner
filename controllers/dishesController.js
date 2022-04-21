@@ -108,8 +108,7 @@ export const addDish = async (req, res) => {
     let dishId = await insertDish(dishName, classNum, Animal_Seafood);
     // Ingredient DB table
     const ingredientName = req.body.ingredientName;
-    const ingredientPrice = req.body.ingredientPrice;
-    let ingredientId = await insertIngredient(ingredientName, ingredientPrice);
+    let ingredientId = await insertIngredient(ingredientName);
     // DishIngredients DB table
     const ingredientQuantity = parseInt(req.body.ingredientQuantity);
     insertDishIngredient(dishId, ingredientId, ingredientQuantity);
@@ -173,15 +172,16 @@ let insertDish = async (dishName, classNum, Animal_Seafood) => {
 };
 
 // Helper function
-const insertIngredient = async (ingredientName, ingredientPrice) => {
-    let tempQuery = `INSERT INTO Ingredient
-                     VALUES (NULL, ?, ?);`;
-    let queryData = await promisePool.query(tempQuery, [ingredientName, ingredientPrice], (error) => {
+const insertIngredient = async (ingredientName) => {
+    let tempQuery = `SELECT ID
+                    FROM Ingredient
+                    WHERE IngredientName = ?;`;
+    let queryData = await promisePool.query(tempQuery, ingredientName, (error) => {
         if(error) {
             console.log(`Database query error. ${error}`);
         }
     });
-    return queryData[0].insertId;
+    return queryData[0][0].ID;
 }
 
 // Helper function
