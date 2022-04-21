@@ -4,7 +4,8 @@ In progress RESTful NodeJS app. I've practiced MySQL for the DB and asynchronici
 # Functional requirements
 - [x] Suggest meals from the database
 - [x] Search for a specific dish
-- [x] Insert a new dish
+- [ ] Insert a new dish
+    - [ ] Multiple ingredients
 - [x] Delete a dish
 
 **Extras** \
