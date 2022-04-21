@@ -146,6 +146,11 @@ div[class="data-point"]:not(:last-of-type) {
     background-color: var(--background-color-4);
 }
 
+.note {
+    font-size: 0.75rem;
+    display: inline;
+}
+
 /* addDish
 ********************************** */
 .form__ingredients- {
