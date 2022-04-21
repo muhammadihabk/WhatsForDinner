@@ -1,5 +1,5 @@
 # WhatsForDinner
-In progress RESTful NodeJS app. Used MySQL for the DB and learning asynchronicity in JS.
+In progress RESTful NodeJS app. I've practiced MySQL for the DB and asynchronicity in JS.
 
 # Functional requirements
 - [x] Suggest meals from the database
