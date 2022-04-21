@@ -10,5 +10,5 @@ Might do later
     a new text area should pop up containing all ingredients data so far.
 
 
-**CRUD**
+**CRUD operations**
 - Data validation on the server side
