@@ -101,7 +101,6 @@ div[class="data-point"]:not(:last-of-type) {
 
 .dishes {
     width: 300px;
-    height: 230px;
     display: flex;
     flex-direction: column;
     justify-content: center;
