@@ -16,9 +16,10 @@ In progress RESTful NodeJS app. I've practiced MySQL for the DB and asynchronici
 [Might do later](https://github.com/muhammadihabk/WhatsForDinner/blob/main/Extras.md)
 
 # How to use
-Navigate to the project directory. Type in your terminal:
-```
-npm i
-node app.js
-```
-Then open http://localhost:3000/ in your browser.
+- Build and populate the [database](https://github.com/muhammadihabk/WhatsForDinner/blob/main/Database/Schema%20and%20Tables%20Population.sql).
+- Navigate to the project directory. Type in your terminal:
+    ```
+    npm i
+    node app.js
+    ```
+- Open http://localhost:3000/ in your browser.
