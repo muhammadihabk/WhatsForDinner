@@ -13,7 +13,7 @@ dishes.post('/add-dish', upload.none(), dishesController.addDish);
 dishes.get('/ingredientNames', dishesController.ingredientNames);
 
 // READ
-dishes.post('/dishes', upload.none(), dishesController.dishes);
+dishes.get('/dishes', upload.none(), dishesController.dishes);
 dishes.post('/dishes/search', upload.none(), dishesController.dishesSearch);
 
 // UPDATE

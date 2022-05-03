@@ -15,12 +15,13 @@ const pool = mysql.createPool({
 });
 
 export const dishes = async (req, res) => {
+    console.log(req.query);
     let dishClass = Math.floor(Math.random() * 2);
     let animalOrSeafood = Math.floor(Math.random() * 2);
     if(dishClass === 0) {
         animalOrSeafood = 0 ;
     }
-    [dishClass, animalOrSeafood] = setParameters(req.body, dishClass, animalOrSeafood);
+    [dishClass, animalOrSeafood] = setParameters(req.query, dishClass, animalOrSeafood);
     const data = await dishesQuery(dishClass, animalOrSeafood);
     res.json(data);
 };

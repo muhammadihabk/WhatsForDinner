@@ -3,7 +3,7 @@ import 'dotenv/config.js'
 import dishes from './routes/dishes.js';
 
 let app = express();
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.static('public'));
 
