@@ -5,20 +5,19 @@ let onGenerationFormSubmission = (e) => {
         method: 'POST',
         body: formData
     };
-    fetch('/app/generate_meal', options)
+    fetch('/app/dishes', options)
     .then((res) => {
         if(!res.ok) { throw new Error(`HTTP error. Status ${res.status}`) }
         return res.json();
-        })
-        .then((data) => {
+    })
+    .then((data) => {
             let dishesDiv = document.querySelector('.dishes');
             dishesDiv.innerHTML = '';
             let totalPrice = 0;
-            let dishes = data.data;
             const choosenDishes = [];
             let currDish = '';
             let i = 0;
-            for(let dish of dishes) {
+            data.forEach(dish => {
                 if(dish.DishName !== currDish) {
                     currDish = dish.DishName;
                     let temp = ['', 0];
@@ -27,18 +26,18 @@ let onGenerationFormSubmission = (e) => {
                     i++;
                 }
                 totalPrice += parseFloat(dish.Price);
-            }
+            });
             if(typeof formParameters !== 'undefined' && formParameters[0] === 'ingredients') {
                 currDish = '';
                 let i = 0;
-                for(let dish of dishes) {
+                data.forEach(dish => {
                     if(choosenDishes[i][0] === dish.DishName) {
                         choosenDishes[i][1] += parseFloat(dish.Price);
                         choosenDishes[i].push(dish.IngredientName);
                     } else {
                         i++;
                     }
-                }
+                });
             }
             choosenDishes.forEach(dish => {
                 let dishPara = document.createElement('p');
