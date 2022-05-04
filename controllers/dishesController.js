@@ -26,7 +26,7 @@ export const dishes = async (req, res) => {
 };
 
 export const dishesSearch = async (req, res) => {
-    const searchValue = req.body.search;
+    const searchValue = req.query.search;
     let tempQuery = `SELECT d.DishName, i.IngredientName, (i.Price * di.Quantity) Price
                     FROM Dish d
                     INNER JOIN DishIngredient AS di

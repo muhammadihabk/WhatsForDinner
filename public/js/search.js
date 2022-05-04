@@ -1,12 +1,8 @@
 // Search for a dish
 const searchForm = document.querySelector('#search-form');
 searchForm.addEventListener('submit', (e) => {
-    const formData = new FormData(searchForm);
-    const options = {
-        method: 'POST',
-        body: formData
-    }
-    fetch('/app/dishes/search', options)
+    const formData = new URLSearchParams(new FormData(searchForm)).toString();
+    fetch(`/app/dishes/search?${formData}`)
     .then((res) => {
         if(!res.ok) { throw new Error(`HTTP error. States: ${res.status}`) }
         return res.json();

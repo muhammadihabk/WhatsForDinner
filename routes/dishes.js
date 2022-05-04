@@ -14,7 +14,7 @@ dishes.get('/ingredientNames', dishesController.ingredientNames);
 
 // READ
 dishes.get('/dishes', upload.none(), dishesController.dishes);
-dishes.post('/dishes/search', upload.none(), dishesController.dishesSearch);
+dishes.get('/dishes/search', upload.none(), dishesController.dishesSearch);
 
 // UPDATE
 
