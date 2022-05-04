@@ -15,7 +15,6 @@ const pool = mysql.createPool({
 });
 
 export const dishes = async (req, res) => {
-    console.log(req.query);
     let dishClass = Math.floor(Math.random() * 2);
     let animalOrSeafood = Math.floor(Math.random() * 2);
     if(dishClass === 0) {
