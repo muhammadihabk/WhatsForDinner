@@ -8,18 +8,21 @@ const upload = multer();
 // CRUD
 
 // CREATE
-// /dishes/add
+// Add dish
 dishes.get('/dishes/add', dishesController.addDishPage);
+dishes.get('/dishes/ingredients/names', dishesController.ingredientNames);
 dishes.post('/dishes/add', upload.none(), dishesController.addDish);
 
 // READ
+// Generate meal
 dishes.get('/dishes', upload.none(), dishesController.dishes);
+// Search for a dish
 dishes.get('/dishes/search', upload.none(), dishesController.dishesSearch);
-dishes.get('/dishes/ingredients/names', dishesController.ingredientNames);
 
 // UPDATE
 
 // DELETE
+// Delete a dish
 dishes.get('/delete-dish', dishesController.deleteDishPage);
 dishes.delete('/delete-dish', upload.none(), dishesController.deleteDish);
 
