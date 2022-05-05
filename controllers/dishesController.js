@@ -46,15 +46,15 @@ export const addDishPage = (req, res) => {
     res.sendFile('/public/html/addDish.html', { root: __dirname });
 };
 
-export const ingredientNames = (req, res) => {
+export const ingredientNames = async (req, res) => {
     let tempQuery = `SELECT IngredientName
-                    FROM Ingredient; `;
-    pool.query(tempQuery, (error, data) => {
-        if(error) {
-            console.log(`Database query error. ${error}`);
-        }
-        res.json({data});
+                    FROM Ingredient;`;
+    const results = await pool.query(tempQuery)
+    .then(results => results[0])
+    .catch(error => {
+        throw error
     });
+    res.json(results);
 };
 
 export const addDish = (req, res) => {

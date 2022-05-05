@@ -1,14 +1,12 @@
 // Populate ingredients' names HTML select element
-fetch('/app/ingredientNames')
+fetch('/app/dishes/ingredients/names')
 .then((res) => {
         if(!res.ok) { throw new Error(`Couldn't fetch ${res.status}`) }
-        console.log('done');
         return res.json();
     })
     .then((data) => {
-        const options = data.data;
         const ingredientNameSelect = document.querySelector('#ingredientName');
-        const ingredientNameSelectOptions = options.map((option) => {
+        const ingredientNameSelectOptions = data.map((option) => {
             return `<option value="${option.IngredientName}">${option.IngredientName}</option>`
         });
         ingredientNameSelect.innerHTML = ingredientNameSelectOptions;
