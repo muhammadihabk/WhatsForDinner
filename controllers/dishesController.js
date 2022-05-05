@@ -49,12 +49,8 @@ export const addDishPage = (req, res) => {
 export const ingredientNames = async (req, res) => {
     let tempQuery = `SELECT IngredientName
                     FROM Ingredient;`;
-    const results = await pool.query(tempQuery)
-    .then(results => results[0])
-    .catch(error => {
-        throw error
-    });
-    res.json(results);
+    const results = await pool.query(tempQuery);
+    res.json(results[0]);
 };
 
 export const addDish = async (req, res) => {
