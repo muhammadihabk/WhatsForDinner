@@ -8,7 +8,8 @@ const upload = multer();
 // CRUD
 
 // CREATE
-dishes.get('/add-dish', dishesController.addDishPage);
+// /dishes/add
+dishes.get('/dishes/add', dishesController.addDishPage);
 dishes.post('/add-dish', upload.none(), dishesController.addDish);
 
 // READ
