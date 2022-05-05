@@ -5,12 +5,12 @@ deleteDishForm.addEventListener('submit', (e) => {
         method: 'DELETE',
         body: formData
     };
-    fetch('/app/delete-dish', options)
+    fetch('/app/dishes/delete', options)
     .then((res) => {
         const deletetionMessage = document.querySelector('.deletion-message');
         if(!res.ok) {
-            deletetionMessage.innerHTML = 'Failed. Wrong name';
-            deletetionMessage.style.color = 'red';
+            deletetionMessage.innerHTML = 'Failed';
+            deletetionMessage.style.color = '#ff0000';
             throw new Error(`Couldn't fetch ${res.status}`);
         } else {
             console.log(res.status);

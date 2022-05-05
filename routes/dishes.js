@@ -23,7 +23,7 @@ dishes.get('/dishes/search', upload.none(), dishesController.dishesSearch);
 
 // DELETE
 // Delete a dish
-dishes.get('/delete-dish', dishesController.deleteDishPage);
-dishes.delete('/delete-dish', upload.none(), dishesController.deleteDish);
+dishes.get('/dishes/delete', dishesController.deleteDishPage);
+dishes.delete('/dishes/delete', upload.none(), dishesController.deleteDish);
 
 export default dishes;
