@@ -57,10 +57,38 @@ export const ingredientNames = async (req, res) => {
     res.json(results);
 };
 
-export const addDish = (req, res) => {
-    pool.getConnection((error, connection) => {
-        addDishQuery(connection);
+export const addDish = async (req, res) => {
+    let response = {};
+    const connection = await pool.getConnection((error) => {
+        if(error) { console.log(`Database connection error. ${error}`); }
     });
+    try {
+        await connection.beginTransaction();
+        // Dish DB table
+        const dishName = req.body.dishName;
+        let classNum = 0;
+        let Animal_Seafood =  2;
+        if(req.body.light_heavy === 'heavy') {
+            classNum =  1;
+        }
+        if(req.body.animal_seafood === 'animal') {
+            Animal_Seafood =  0;
+        } else if(req.body.animal_seafood === 'seafood') {
+            Animal_Seafood =  1;
+        }
+        let dishId = await insertDish(connection, dishName, classNum, Animal_Seafood);
+        // Ingredient DB table
+        const ingredientName = req.body.ingredientName;
+        let ingredientId = await insertIngredient(connection, ingredientName);
+        // DishIngredients DB table
+        const ingredientQuantity = parseInt(req.body.ingredientQuantity);
+        insertDishIngredient(connection, dishId, ingredientId, ingredientQuantity);
+        connection.release();
+        res.json('Success');
+    } catch(error) {
+        await connection.rollback();
+        res.status(500).json('Failed');
+    }
 };
 
 export const deleteDishPage = (req, res) => {
@@ -126,34 +154,6 @@ let setParameters = (parameters, dishClass, animalOrSeafood) => {
     });
     return [dishClass, animalOrSeafood];
 };
-
-// Helper function
-async function addDishQuery(connection) {
-        if(error) {
-            console.log(`Couldn't establish connection. ${error}`);
-        }
-        // Dish DB table
-        const dishName = req.body.dishName;
-        let classNum = 0;
-        let Animal_Seafood =  2;
-        if(req.body.light_heavy === 'heavy') {
-            classNum =  1;
-        }
-        if(req.body.animal_seafood === 'animal') {
-            Animal_Seafood =  0;
-        } else if(req.body.animal_seafood === 'seafood') {
-            Animal_Seafood =  1;
-        }
-        let dishId = await insertDish(connection, dishName, classNum, Animal_Seafood);
-        // Ingredient DB table
-        const ingredientName = req.body.ingredientName;
-        let ingredientId = await insertIngredient(connection, ingredientName);
-        // DishIngredients DB table
-        const ingredientQuantity = parseInt(req.body.ingredientQuantity);
-        insertDishIngredient(connection, dishId, ingredientId, ingredientQuantity);
-        connection.release();
-        res.end('OK');
-}
 
 // Helper function
 let insertDish = async (connection, dishName, classNum, Animal_Seafood) => {

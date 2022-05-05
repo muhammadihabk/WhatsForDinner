@@ -19,12 +19,17 @@ addDishForm.addEventListener('submit', (e) => {
         method: 'POST',
         body: formData
     };
-    fetch('/app/add-dish', options)
+    fetch('/app/dishes/add', options)
     .then((res) => {
-        if(!res.ok) { throw new Error(`Couldn't fetch ${res.status}`) }
         const successMessage = document.querySelector('.insertion-success');
-        successMessage.innerHTML = 'Success';
-        successMessage.style.color = 'yellowgreen';
+        if(!res.ok) {
+            successMessage.innerHTML = 'Failed';
+            successMessage.style.color = '#ff0000';
+            throw new Error(`Couldn't fetch ${res.status}`)
+        } else {
+            successMessage.innerHTML = 'Success';
+            successMessage.style.color = 'yellowgreen';
+        }
     });
     e.preventDefault();
 });

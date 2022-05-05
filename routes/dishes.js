@@ -10,7 +10,7 @@ const upload = multer();
 // CREATE
 // /dishes/add
 dishes.get('/dishes/add', dishesController.addDishPage);
-dishes.post('/add-dish', upload.none(), dishesController.addDish);
+dishes.post('/dishes/add', upload.none(), dishesController.addDish);
 
 // READ
 dishes.get('/dishes', upload.none(), dishesController.dishes);
