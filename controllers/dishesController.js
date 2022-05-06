@@ -93,19 +93,45 @@ export const deleteDishPage = (req, res) => {
 
 export const deleteDish =  async (req, res) => {
     const dishName = req.body.dishName;
-    let tempQuery = `DELETE
-                     FROM Dish
-                     WHERE DishName = ?;`;
-    const queryResult = await pool.query(tempQuery, dishName, (error) => {
-        if(error) {
-            console.log(`Database query error. ${error}`);
-        }
+    const connection = await pool.getConnection((error) => {
+        if(error) { console.log(`Database connection error. ${error}`); }
     });
-    if(queryResult[0].affectedRows === 0) {
-        res.status(404).end();
-    } else {
-        res.end();
+    try {
+        await connection.beginTransaction();
+        let query = `SELECT ID
+                    FROM Dish
+                    WHERE DishName = ?;`;
+        let dishID = await connection.query(query, dishName);
+        dishID = dishID[0][0].ID;
+        // Get ingredients to be deleted
+        query = `DROP TABLE IF EXISTS IDs;`;
+        await connection.query(query);
+        query = `CREATE TEMPORARY TABLE IDs AS (SELECT IngredientID
+                                                FROM DishIngredient di
+                                                WHERE di.DishID = ?
+                                                    AND IngredientID IN (SELECT IngredientID
+                                                                        FROM DishIngredient
+                                                                        GROUP BY IngredientID
+                                                                        HAVING COUNT(IngredientID) = 1));`;
+        await connection.query(query, dishID);
+        query = `DELETE
+                FROM Ingredient
+                WHERE ID IN (SELECT *
+                    FROM IDs);`;
+        await connection.query(query);
+        // Delete the dish
+        query = `DELETE
+                FROM Dish
+                WHERE ID = ?;`;
+        await connection.query(query, dishID);
+        await connection.commit();
+        res.json('Success');
+    } catch(error) {
+        await connection.rollback();
+        res.status(500).json('Failed');
+        console.log(error);
     }
+    connection.release();
 };
 
 // Helper function
