@@ -1,5 +1,5 @@
 # WhatsForDinner
-In progress RESTful NodeJS app. I've practiced MySQL for the DB and asynchronicity in JS.
+RESTful NodeJS app. I've practiced MySQL for the DB and asynchronicity in JS.
 # Screenshots
 ![Insert](https://github.com/muhammadihabk/WhatsForDinner/blob/main/Run%20screenshots/insert.png)
 ![Generate](https://github.com/muhammadihabk/WhatsForDinner/blob/main/Run%20screenshots/generate.png)
